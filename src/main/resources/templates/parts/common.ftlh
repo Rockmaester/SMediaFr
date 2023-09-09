@@ -10,7 +10,7 @@
               integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
               crossorigin="anonymous">
     </head>
-    <body>
+    <body style="background-color: #dedede">
 
     <#include "navigationPanel.ftlh">
 

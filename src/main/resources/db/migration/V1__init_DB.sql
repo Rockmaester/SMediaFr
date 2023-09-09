@@ -23,13 +23,13 @@ create table users (
                    ) engine=InnoDB;
 
 alter table publication
-#     add constraint FKq3rvvs0md5b7r8i63c869bs5i
+--      add constraint FKq3rvvs0md5b7r8i63c869bs5i
         /* для constraint напишем человекочитаемые имена */
     add constraint fk_publication_to_user
         foreign key (user_id) references users (id);
 
 alter table user_role
-#     add constraint FKj345gk1bovqvfame88rcx7yyx
+--      add constraint FKj345gk1bovqvfame88rcx7yyx
         /* для constraint напишем человекочитаемые имена */
     add constraint fk_user_role_to_user
         foreign key (user_id) references users (id);

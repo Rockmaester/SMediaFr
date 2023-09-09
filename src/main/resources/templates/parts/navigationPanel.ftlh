@@ -15,9 +15,16 @@
                 <a class="nav-link" href="/">Home</a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="/createPublication">Create new post</a>
-            </li>
+            <#if user??>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user-publications/${currentUserId}">My publications</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/createPublication">Create new publication</a>
+                </li>
+
+            </#if>
 
             <#if isAdmin>
                 <li class="nav-item">

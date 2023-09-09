@@ -2,6 +2,6 @@
 
 <@cmn.page>
 
-    <#include "parts/createPublicationPart.ftlh"/>
+    <#include "parts/publicationsPart.ftlh"/>
 
 </@cmn.page>
