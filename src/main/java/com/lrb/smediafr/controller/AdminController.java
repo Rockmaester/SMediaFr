@@ -8,8 +8,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Map;
 import java.util.Optional;
 
@@ -45,7 +47,6 @@ public class AdminController {
     }
 
 
-
     // метод для сохранения результатов модификации в панели пользователей (вызов из формы userEdit)
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
@@ -62,15 +63,65 @@ public class AdminController {
     // функционал апдейта профиля (смены пароля, емейла, ...)
     @GetMapping("/profile")
     public String getProfile (Model model, @AuthenticationPrincipal User user){
-
         model.addAttribute("username", user.getUsername());
         model.addAttribute("email", user.getEmail());
+        model.addAttribute("user", user);
         return "userProfile";
     }
 
     @PostMapping("/profile")
-    public String updateProfile(@AuthenticationPrincipal User user, @RequestParam String password, @RequestParam String email){
-        userService.updateProfile(user, password, email);
-        return "redirect:/administration/profile";
+    public String updateProfile(
+            @RequestParam String password,
+            @RequestParam String email,
+            @AuthenticationPrincipal @Valid User user,
+            Model model
+    ){
+        model.addAttribute("username", user.getUsername());
+
+        boolean isEmptyPassword = StringUtils.isEmpty(password);
+        if (isEmptyPassword){
+            model.addAttribute("passwordError", ">> Password can't be empty <<");
+            return "userProfile";
+        }
+
+        boolean isEmptyEmail = StringUtils.isEmpty(email);
+        if (isEmptyEmail){
+            model.addAttribute("emailError", ">> Email can't be empty <<");
+            return "userProfile";
+        }
+
+        int updateResult = userService.updateProfile(user, password, email);
+
+        if(updateResult == 1){
+            model.addAttribute("messageType", "warning");
+            model.addAttribute("message", "Please visit your mailbox to confirm your email change");
+        }
+        else if (updateResult == 2){
+            model.addAttribute("messageType", "success");
+            model.addAttribute("message", "The password has been updated successfully.");
+        }
+        else if (updateResult == 3){
+            model.addAttribute("messageType", "warning");
+            model.addAttribute("message", "The password has been updated successfully. \nAlso visit your mailbox to confirm your email change.");
+        }
+        else {
+            model.addAttribute("messageType", "danger");
+            model.addAttribute("message", "Something was wrong during updating!");
+        }
+        return "updateProfileNotification";
+    }
+
+    @GetMapping("/confirm/{code}")
+    public String confirmEmail(Model model, @PathVariable String code){
+
+        boolean isActivated = userService.activateUser(code);
+        if(isActivated){
+            model.addAttribute("messageType", "success");
+            model.addAttribute("message", "Email change successfully confirmed");
+        } else {
+            model.addAttribute("messageType", "danger");
+            model.addAttribute("message", "Activation code is not found!");
+        }
+        return "updateEmailNotification";
     }
 }

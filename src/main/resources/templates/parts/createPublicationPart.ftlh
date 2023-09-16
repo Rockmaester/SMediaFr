@@ -21,17 +21,17 @@
             <div class="form-group">
                 <textarea id="textarea"
                           name="content"
-                          class="form-control ${(contentError??)?string('is-invalid','')}"
-                          value="<#if publication??>${publication.content}</#if>"
-                          placeholder="Enter text of publication here"
+<#--                          class="form-control ${(contentError??)?string('is-invalid','')}"-->
+<#--                          value="<#if publication??>${publication.content}</#if>"-->
+<#--                          placeholder="Enter text of publication here"-->
                           cols="100"
                           rows="10">
                 </textarea>
-                <#if contentError??>
-                    <div class="invalid-feedback">
-                        ${contentError}
-                    </div>
-                </#if>
+<#--                <#if contentError??>-->
+<#--                    <div class="invalid-feedback">-->
+<#--                        ${contentError}-->
+<#--                    </div>-->
+<#--                </#if>-->
 
             </div>
 
@@ -41,7 +41,7 @@
 
             <input type="hidden" name="_csrf" value="${_csrf.token}">
 
-            <input type="hidden" name="id" value="<#if publication??>${publication.id}</#if>">
+<#--            <input type="hidden" name="id" value="<#if publication??>${publication.id}</#if>">-->
 
             <div class="form-group">
                 <button type="submit">Add</button>

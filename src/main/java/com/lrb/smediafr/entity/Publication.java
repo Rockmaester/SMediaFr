@@ -20,8 +20,8 @@ public class Publication {
     @NotBlank(message = "Please fill the title")
     @Length(max=255, message = "Title is too long (more than 255)")
     private String title;
-    @NotBlank(message = "Please fill the text")
-    @Length(max = 2048, message = "Text is too long (more than 2kB)")
+//    @NotBlank(message = "Please fill the text")
+//    @Length(max = 2048, message = "Text is too long (more than 2kB)")
     private String content;
     private String filename;
     @ManyToOne(fetch = FetchType.EAGER)

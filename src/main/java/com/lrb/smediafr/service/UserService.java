@@ -42,31 +42,36 @@ public class UserService implements UserDetailsService {
 
     public boolean addUser(User user){
         User userFromDB = userRepository.findByUsername(user.getUsername());
-
         if(userFromDB != null){
             return false;
         }
-
         user.setActive(false);
         user.setRoles(Collections.singleton(Role.USER));
         user.setActivationCode(UUID.randomUUID().toString());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
         userRepository.save(user);
-        sendMessage(user);
-
+        sendActivationMessage(user);
         return true;
     }
 
 
-    private void sendMessage(User user) {
+    private void sendActivationMessage(User user) {
         if(!StringUtils.isEmpty(user.getEmail())){
             String message = String.format(
                     "Hello, %s! \n" +
                             "Welcome to SocialMedia. Please visit next link: http://%s/activate/%s",
                     user.getUsername(), hostname, user.getActivationCode());
-
             mailSender.send(user.getEmail(), "Activation code", message);
+        }
+    }
+
+    private void sendEmailChangeConfirmationMessage(User user) {
+        if(!StringUtils.isEmpty(user.getEmail())){
+            String message = String.format(
+                    "Hello, %s! \n" +
+                            "Please follow the link to confirm your email change: http://%s/administration/confirm/%s",
+                    user.getUsername(), hostname, user.getActivationCode());
+            mailSender.send(user.getEmail(), "Confirmation email code", message);
         }
     }
 
@@ -114,30 +119,37 @@ public class UserService implements UserDetailsService {
     }
 
 
-    public void updateProfile(User user, String password, String email) {
+    public int updateProfile(User user, String password, String email) {
+
+        // апдейты: почта(1), пароль(2) или оба(3).
+        int result = 0;
 
         String userEmail = user.getEmail();
-
         boolean isEmailChanged = (email != null && !email.equals(userEmail) ||
                 (userEmail != null && !userEmail.equals(email)));
+
 
         if(isEmailChanged){
             user.setEmail(email);
             if(!StringUtils.isEmpty(email)){
                 user.setActivationCode(UUID.randomUUID().toString());
             }
+            result = 1;
         }
 
         if(!StringUtils.isEmpty(password)){
             user.setPassword(passwordEncoder.encode(password));
+            result += 2;
         }
 
         userRepository.save(user);
 
         if(isEmailChanged){
-            sendMessage(user);
+            sendEmailChangeConfirmationMessage(user);
         }
+        return result;
     }
+
 
     public void subscribe(User currentUser, User user) {
         user.getSubscribers().add(currentUser);

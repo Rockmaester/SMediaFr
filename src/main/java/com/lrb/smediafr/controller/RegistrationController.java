@@ -56,7 +56,7 @@ public class RegistrationController {
             model.addAttribute("usernameError", "User exists!");
             return "registrationPage";
         }
-        return "notificateCheckEmail";
+        return "notifyCheckEmail";
     }
 
     @GetMapping("/activate/{code}")
