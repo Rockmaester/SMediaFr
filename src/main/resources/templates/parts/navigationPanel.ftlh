@@ -17,7 +17,7 @@
 
             <#if user??>
                 <li class="nav-item">
-                    <a class="nav-link" href="/user-publications/${currentUserId}">My publications</a>
+                    <a class="nav-link" href="/user-publications/${currentUserId}?page=0&size=3">My publications</a>
                 </li>
 
                 <li class="nav-item">

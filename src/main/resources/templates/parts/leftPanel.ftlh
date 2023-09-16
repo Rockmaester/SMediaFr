@@ -7,18 +7,15 @@
     section{
         overflow:auto;
         min-height: 0;
-        position:fixed; /* на absolete боковая панель прокручивается с основной страницей*/
-        /*position: absolute;*/
+        position:fixed;
         height: 100%;
         width: 15%;
         min-width: 170px;
         background: #bababa;
         overflow-x: scroll;
-        /*overflow-y: scroll;*/
     }
 </style>
 
-<#--<aside>-->
 <section>
     <#--Внедрение схлопывающихся списков подписчиков и подписок https://getbootstrap.com/docs/4.1/components/collapse/-->
     <div class="accordion" id="accordionExample">
@@ -32,7 +29,6 @@
                 </h6>
             </div>
 
-            <#--здесь class="collapse show" вместо class="collapse" говорит об открытом по умолчанию списке-->
             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="card-body">
                     <#include "subscribersPart.ftlh"/>
@@ -76,4 +72,3 @@
         </div>
     </div>
 </section>
-<#--</aside>-->

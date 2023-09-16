@@ -1,8 +1,14 @@
 
 <#include "security.ftlh">
+<#import "paginator.ftlh" as pgntr>
 
 <div class="m-5" align="center">
-    <#list publications as publication>
+
+    <div>
+        <@pgntr.paginator url page pagesize/>
+    </div>
+
+    <#list page.content as publication>
 
         <div class="card my-3" style="width: auto; max-width: 36rem">
 
@@ -12,7 +18,7 @@
 
             <div>
                 author:
-                <a href="/user-publications/${publication.author.id}">
+                <a href="/user-publications/${publication.author.id}?page=0&size=3">
                     <i>${publication.authorName}</i>
                 </a>
             </div>
@@ -40,4 +46,7 @@
     <#else>
         No publications
     </#list>
+
+    <@pgntr.paginator url page pagesize/>
+
 </div>
