@@ -43,6 +43,8 @@ public class User implements UserDetails {
     private Set<Publication> publications;
 
 
+    private static final long serialVersionUID = 1598746539874812365L;
+
     // метод добавлен в связи с необходимостью отображения / скрытия в навигационной панели меню администрирования
     // для конкретных категорий пользователей
     public boolean isAdmin(){

@@ -1,3 +1,5 @@
+use smedia_db;
+
 create table publication (
     id bigint not null auto_increment,
      content text(65535),

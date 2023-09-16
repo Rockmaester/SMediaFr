@@ -1,2 +1,7 @@
-drop database socialmedia_db;
-create database socialmedia_db;
+drop database smedia_db;
+create database smedia_db;
+
+mvn clean package -DskipTests
+scp target/SMediaFr-0.0.1-SNAPSHOT.jar root@194.87.232.150:/home/
+
+nohup java -jar SMediaFr-0.0.1-SNAPSHOT.jar > SMediaFr.out &

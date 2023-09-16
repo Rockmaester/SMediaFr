@@ -11,8 +11,9 @@
             </div>
 
             <div>
+                author:
                 <a href="/user-publications/${publication.author.id}">
-                    ${publication.authorName}
+                    <i>${publication.authorName}</i>
                 </a>
             </div>
 
