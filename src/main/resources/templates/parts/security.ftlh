@@ -13,7 +13,7 @@ known = Session.SPRING_SECURITY_CONTEXT??
 <#else>
     <#--заглушка-->
     <#assign
-        name = "unknown"
+        name = "No autorized"
         isAdmin = false
         currentUserId = -1
     >

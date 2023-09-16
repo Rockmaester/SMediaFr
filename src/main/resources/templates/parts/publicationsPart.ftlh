@@ -4,7 +4,7 @@
 <div class="m-5" align="center">
     <#list publications as publication>
 
-        <div class="card my-3" style="width: 27rem;">
+        <div class="card my-3" style="width: auto; max-width: 36rem">
 
             <div>
                 <b>${publication.title}</b>

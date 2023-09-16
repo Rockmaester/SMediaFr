@@ -43,15 +43,38 @@ public class SMController {
     private PublicationRepository publicationRepository;
 
     @GetMapping("/")
-    public String goToMain(@AuthenticationPrincipal User user, Model model) {
+    public String goToMain(@AuthenticationPrincipal User currentUser, Model model) {
 
         Iterable<Publication> publications = publicationRepository.findAll();
         model.addAttribute("publications", publications);
+        model.addAttribute("currentuser", currentUser);
+        model.addAttribute("mysubscribers", currentUser.getSubscribers());
+        model.addAttribute("subscriptions", currentUser.getSubscriptions());
+        model.addAttribute("subscriptionsCount", currentUser.getSubscriptions().size());
+        model.addAttribute("subscribersCount", currentUser.getSubscribers().size());
+
+//        return "mainPage";
+        return "redirect:/main/" + currentUser.getId();
+    }
+
+    @GetMapping("/main/{user}")
+    public String showMain(@AuthenticationPrincipal User currentUser,
+                           @PathVariable User user,
+                           Model model
+    ){
+        Iterable<Publication> publications = publicationRepository.findAll();
+        model.addAttribute("publications", publications);
         model.addAttribute("delimiter", "=====================================================");
-        model.addAttribute("currentuser", user);
+        model.addAttribute("currentuser", currentUser);
+        model.addAttribute("mysubscribers", user.getSubscribers());
+        model.addAttribute("subscriptions", user.getSubscriptions());
+        model.addAttribute("subscriptionsCount", user.getSubscriptions().size());
+        model.addAttribute("subscribersCount", user.getSubscribers().size());
 
         return "mainPage";
     }
+
+
 
     @GetMapping("/createPublication")
     public String goToCreatePublicationPage() {
@@ -88,7 +111,7 @@ public class SMController {
         model.addAttribute("publications", publications);
         model.addAttribute("delimiter", "============================================================");
 
-        return "mainPage";
+        return "redirect:/";
     }
 
     private void saveFile(Publication publication, MultipartFile file) {
@@ -122,6 +145,14 @@ public class SMController {
         model.addAttribute("publications", publications);
         model.addAttribute("isCurrentUser", currentUser.equals(user));
         model.addAttribute("publication", publication);
+
+        // Добавление подписок и подписчиков:
+        model.addAttribute("userChannel", user);
+        model.addAttribute("subscriptionsCount", user.getSubscriptions().size());
+        model.addAttribute("subscribersCount", user.getSubscribers().size());
+        model.addAttribute("mysubscribers", user.getSubscribers());
+        model.addAttribute("subscriptions", user.getSubscriptions());
+        model.addAttribute("isSubscriber", user.getSubscribers().contains(currentUser));
         return "userPublications";
     }
 

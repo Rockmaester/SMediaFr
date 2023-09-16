@@ -11,10 +11,28 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
           integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
           crossorigin="anonymous">
+
+    <style>
+        body{
+            background-color: #dcdcdc;
+        }
+    </style>
 </head>
-<body style="background-color: #dedede">
+<body>
 <#include "parts/navigationPanel.ftlh"/>
-<#include "parts/publicationsPart.ftlh"/>
+
+<div class="d-flex">
+    <div class="p-2 flex-fill"
+         style=" /*border-style: solid; border-color: crimson;*/
+         width: auto;
+         max-width: 20rem;
+         min-width: 10rem">
+        <#include "parts/leftPanel.ftlh">
+    </div>
+    <div class="p-2 flex-fill" <#--style="border-style: solid; border-color: crimson"--> >
+        <#include "parts/publicationsPart.ftlh"/>
+    </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>

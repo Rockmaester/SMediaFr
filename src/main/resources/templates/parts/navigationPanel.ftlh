@@ -45,9 +45,9 @@
         </div>
 
         <div>
-            <@lgnlgt.logout/>
+            <#if user??>
+                <@lgnlgt.logout/>
+            </#if>
         </div>
-
     </div>
-
 </nav>
