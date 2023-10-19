@@ -5,3 +5,6 @@ mvn clean package -DskipTests
 scp target/SMediaFr-0.0.1-SNAPSHOT.jar root@194.87.232.150:/home/
 
 nohup java -jar SMediaFr-0.0.1-SNAPSHOT.jar > SMediaFr.out &
+
+https://stackoverflow.com/questions/2983248/com-mysql-jdbc-exceptions-jdbc4-communicationsexception-communications-link-fai
+https://stackoverflow.com/questions/6865538/solving-a-communications-link-failure-with-jdbc-and-mysql

@@ -79,8 +79,6 @@ public class SMController {
         // Внедрение пагинации:
         Page<Publication> page = publicationRepository.findAll(pageable);
 
-        System.out.println(page.getTotalPages());
-
         // Внедрение пагинации:
         model.addAttribute("page", page);
         model.addAttribute("url", "/main/" + user.getId());
